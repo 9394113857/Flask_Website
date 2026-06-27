@@ -1,0 +1,417 @@
+venv) PS E:\Devops-Projects\Flask_Website> py .\run.py
+Traceback (most recent call last):
+  File "E:\Devops-Projects\Flask_Website\run.py", line 14, in <module>
+    from app import create_app
+  File "E:\Devops-Projects\Flask_Website\app\__init__.py", line 8, in <module>
+    from app.controllers.calculator_controller import calculator_bp
+ImportError: cannot import name 'calculator_bp' from 'app.controllers.calculator_controller' (E:\Devops-Projects\Flask_Website\app\controllers\calculator_controller.py)
+(venv) PS E:\Devops-Projects\Flask_Website> 
+
+😂 Broooooo this is actually a good error. This is exactly the kind of thing you'll encounter in real development, and it's a great teaching moment.
+
+Let's understand it instead of just fixing it.
+
+Read the error from top to bottom
+ImportError: cannot import name 'calculator_bp'
+
+Ask your wife:
+
+What is Python trying to import?
+
+Answer:
+
+calculator_bp
+
+from
+
+app.controllers.calculator_controller
+Then ask
+
+Does calculator_controller.py actually contain a variable named calculator_bp?
+
+Probably No.
+
+That's why Python says:
+
+I looked inside calculator_controller.py, but I couldn't find calculator_bp.
+
+In __init__.py you probably have:
+from app.controllers.calculator_controller import calculator_bp
+
+So Python expects this inside calculator_controller.py:
+
+calculator_bp = Blueprint(...)
+
+If it's missing, you'll get exactly this error.
+
+There are only 3 possible reasons
+Reason 1 (Most Common)
+
+Your file is empty.
+
+Example:
+
+# calculator_controller.py
+
+Nothing inside.
+
+❌ Error.
+
+Reason 2
+
+Blueprint name is different.
+
+Example
+
+calc_bp = Blueprint(...)
+
+But importing
+
+calculator_bp
+
+❌ Error.
+
+Names must match.
+
+Reason 3
+
+Blueprint wasn't created.
+
+Example
+
+from flask import Blueprint
+
+but forgot
+
+calculator_bp = Blueprint(...)
+Quick Fix
+
+Create a placeholder controller first.
+
+app/controllers/calculator_controller.py
+
+from flask import Blueprint, render_template
+
+calculator_bp = Blueprint("calculator", __name__)
+
+
+@calculator_bp.route("/calculator")
+def calculator():
+    return render_template("calculator.html")
+
+Then create an empty HTML.
+
+templates/calculator.html
+
+{% extends "base.html" %}
+
+{% block title %}
+Calculator
+{% endblock %}
+
+{% block content %}
+<h1>Calculator Page</h1>
+{% endblock %}
+But wait...
+
+You'll immediately get another error 😂
+
+Because now Flask will say
+
+cannot import bmi_bp
+
+Why?
+
+Same reason.
+
+Since in __init__.py you're importing all of these:
+home_bp
+calculator_bp
+bmi_bp
+flames_bp
+guess_bp
+about_bp
+contact_bp
+
+All of those controller files must exist and define the expected Blueprint variables.
+
+My recommendation (Professional way)
+
+Before adding any logic, create all controller placeholders.
+
+controllers/
+
+home_controller.py          ✅
+
+calculator_controller.py
+
+bmi_controller.py
+
+flames_controller.py
+
+guess_controller.py
+
+about_controller.py
+
+contact_controller.py
+
+Each one should have:
+
+from flask import Blueprint, render_template
+
+<name>_bp = Blueprint("<name>", __name__)
+
+
+@<name>_bp.route("/<route>")
+def <function_name>():
+    return render_template("<page>.html")
+
+Then create the matching HTML file.
+
+Now the project starts successfully.
+
+🎯 I have a better plan
+
+Instead of creating one placeholder at a time, we'll create all six controller files and all six HTML pages in one go. They'll be minimal but complete, so:
+
+✅ Your application runs.
+✅ Navbar links work.
+✅ Every page opens.
+✅ Then we can implement Calculator, BMI, FLAMES, etc., feature by feature by adding service logic.
+
+This is exactly how many teams scaffold a project before implementing the actual functionality.
+
+====================
+Another Error
+====================
+File "E:\Devops-Projects\Flask_Website\venv\Lib\site-packages\flask\templating.py", line 100, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bmi.html
+
+😂😂 Brooooo!! This is actually excellent. Your project is working exactly as expected.
+
+This is a TemplateNotFound error, not a Blueprint error.
+
+Let's debug it like a senior developer.
+
+Read the Last Line First
+
+Always teach your wife this rule.
+
+❌ Don't start reading from the top.
+
+Read the last line.
+
+jinja2.exceptions.TemplateNotFound: bmi.html
+
+Ask her:
+
+What is Flask trying to find?
+
+Answer:
+
+bmi.html
+Then ask
+
+Where does Flask search for HTML files?
+
+Expected Answer
+
+app/
+│
+templates/
+
+Exactly.
+
+Check 1
+
+Do you actually have
+
+app/
+│
+templates/
+│
+├── bmi.html
+
+?
+
+If not,
+
+that's the problem.
+
+Check 2
+
+Maybe you created
+
+BMI.html
+
+instead of
+
+bmi.html
+
+Windows doesn't always complain,
+
+but Render (Linux) will.
+
+Always use lowercase.
+
+Correct
+
+bmi.html
+
+Wrong
+
+BMI.html
+
+Bmi.html
+Check 3
+
+Is it inside
+
+app/templates/
+
+NOT
+
+templates/
+
+outside app.
+
+Correct
+
+Flask_Website
+
+app
+
+templates
+
+bmi.html
+
+Wrong
+
+Flask_Website
+
+templates
+
+bmi.html
+Check 4
+
+Inside controller
+
+Do you have
+
+return render_template("bmi.html")
+
+?
+
+If yes
+
+Then Flask searches exactly for
+
+bmi.html
+Easiest Test
+
+Open terminal
+
+dir app\templates
+
+or
+
+ls app\templates
+
+You should see
+
+about.html
+
+base.html
+
+bmi.html
+
+calculator.html
+
+contact.html
+
+flames.html
+
+guess.html
+
+home.html
+
+If
+
+bmi.html
+
+is missing,
+
+that's the problem.
+
+Teaching Moment (KT)
+
+Ask your wife:
+
+Why did Calculator work?
+
+Expected answer
+
+Because
+
+calculator.html
+
+exists.
+
+Ask
+
+Why did BMI fail?
+
+Expected answer
+
+Because Flask couldn't find
+
+bmi.html
+
+Excellent.
+
+Professional Debugging Rule
+
+Teach this forever.
+
+Whenever Flask throws an exception,
+
+Read
+
+LAST LINE
+
+↓
+
+File mentioned
+
+↓
+
+Check if it exists
+
+↓
+
+Check spelling
+
+↓
+
+Check folder
+
+Never panic by reading 40 lines of traceback.
+
+The traceback tells you how the error happened.
+
+The last line tells you what the error is.
+
+📸 I want to verify one thing.
+
+Please paste the output of:
+
+tree /F
+
+from your project root (Flask_Website).
+
+That will show your complete folder structure, and in about 10 seconds I'll tell you exactly if:
+
+a template is missing,
+it's in the wrong folder,
+or it's just named incorrectly.

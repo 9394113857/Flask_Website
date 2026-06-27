@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+Calculator
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-6 col-md-8 col-sm-12">
+
+        <div class="card shadow-lg">
+
+            <div class="card-header bg-primary text-white text-center">
+
+                <h2>Calculator</h2>
+
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    <!-- First Number -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            First Number
+
+                        </label>
+
+                        <input
+                            type="number"
+                            step="any"
+                            class="form-control"
+                            name="number1"
+                            placeholder="Enter First Number"
+                            required>
+
+                    </div>
+
+
+                    <!-- Second Number -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Second Number
+
+                        </label>
+
+                        <input
+                            type="number"
+                            step="any"
+                            class="form-control"
+                            name="number2"
+                            placeholder="Enter Second Number"
+                            required>
+
+                    </div>
+
+
+                    <!-- Operation -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Select Operation
+
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="operation">
+
+                            <option value="+">Addition (+)</option>
+
+                            <option value="-">Subtraction (-)</option>
+
+                            <option value="*">Multiplication (*)</option>
+
+                            <option value="/">Division (/)</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Button -->
+
+                    <div class="d-grid">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            Calculate
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- Success Message -->
+
+                {% if result is not none %}
+
+                <div class="alert alert-success mt-4">
+
+                    <h4 class="text-center">
+
+                        Result : {{ result }}
+
+                    </h4>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- Error Message -->
+
+                {% if error %}
+
+                <div class="alert alert-danger mt-4">
+
+                    <h5 class="text-center">
+
+                        {{ error }}
+
+                    </h5>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
