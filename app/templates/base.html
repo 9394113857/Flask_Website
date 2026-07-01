@@ -3,56 +3,86 @@
 
 <head>
 
+    <!-- ========================================================= -->
     <!-- Character Encoding -->
+    <!-- ========================================================= -->
     <meta charset="UTF-8">
 
+    <!-- ========================================================= -->
     <!-- Mobile Responsive -->
+    <!-- ========================================================= -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- ========================================================= -->
     <!-- Page Title -->
+    <!-- Child templates can override this block -->
+    <!-- ========================================================= -->
     <title>
         {% block title %}
         Flask Website
         {% endblock %}
     </title>
 
-    <!-- Bootstrap CSS -->
+    <!-- ========================================================= -->
+    <!-- Bootstrap 5 CSS -->
+    <!-- ========================================================= -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
+    <!-- ========================================================= -->
+    <!-- Custom Stylesheet -->
+    <!-- ========================================================= -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <!-- Favicon -->
+    <!-- ========================================================= -->
+    <!-- Website Favicon -->
+    <!-- ========================================================= -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/lab_flask_test_tube.ico') }}">
 
 </head>
 
 <body>
 
+    <!-- ========================================================= -->
+    <!-- Navigation Bar -->
+    <!-- sticky-top  : Keeps navbar visible while scrolling -->
+    <!-- shadow-sm   : Adds a subtle Bootstrap shadow -->
+    <!-- ========================================================= -->
 
-    <!-- ================= NAVBAR ================= -->
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
 
         <div class="container">
 
-            <a class="navbar-brand" href="{{ url_for('home.home') }}">
+            <!-- ================= Brand ================= -->
 
-                Flask Website
+            <a class="navbar-brand fw-bold" href="{{ url_for('home.home') }}">
+
+                🧪 Flask Website
 
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <!-- ================= Mobile Menu Button ================= -->
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 
                 <span class="navbar-toggler-icon"></span>
 
             </button>
 
+            <!-- ================= Navigation Links ================= -->
+
             <div class="collapse navbar-collapse" id="navbarNav">
 
-                <ul class="navbar-nav ms-auto">
+                <!--
+                    ms-auto     : Push menu to the right
+                    mx-lg-2     : Better spacing between menu items
+                -->
 
-                    <li class="nav-item">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    <!-- Home -->
+
+                    <li class="nav-item mx-lg-2">
 
                         <a class="nav-link" href="{{ url_for('home.home') }}">
 
@@ -62,9 +92,11 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <!-- Calculator -->
 
-                        <a class="nav-link" href="/calculator">
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="{{ url_for('calculator.calculator') }}">
 
                             Calculator
 
@@ -72,9 +104,11 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <!-- BMI -->
 
-                        <a class="nav-link" href="/bmi">
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="{{ url_for('bmi.bmi') }}">
 
                             BMI
 
@@ -82,9 +116,11 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <!-- FLAMES -->
 
-                        <a class="nav-link" href="/flames">
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="{{ url_for('flames.flames') }}">
 
                             FLAMES
 
@@ -92,9 +128,11 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <!-- Guess Game -->
 
-                        <a class="nav-link" href="/guess">
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="{{ url_for('guess.guess') }}">
 
                             Guess
 
@@ -102,9 +140,27 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <!--
+                        Placeholder Link
+                        Route will be added later in:
+                        feature/math-toolkit
+                    -->
 
-                        <a class="nav-link" href="/about">
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="#">
+
+                            Math Toolkit
+
+                        </a>
+
+                    </li>
+
+                    <!-- About -->
+
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="{{ url_for('about.about') }}">
 
                             About
 
@@ -112,9 +168,11 @@
 
                     </li>
 
-                    <li class="nav-item">
+                    <!-- Contact -->
 
-                        <a class="nav-link" href="/contact">
+                    <li class="nav-item mx-lg-2">
+
+                        <a class="nav-link" href="{{ url_for('contact.contact') }}">
 
                             Contact
 
@@ -130,28 +188,39 @@
 
     </nav>
 
+    <!-- ========================================================= -->
+    <!-- Main Page Content -->
+    <!-- Child templates inject their content here -->
+    <!-- py-5 provides balanced top and bottom spacing -->
+    <!-- ========================================================= -->
 
-    <!-- ================= PAGE CONTENT ================= -->
-
-    <div class="container mt-5 mb-5">
+    <main class="container py-5">
 
         {% block content %}
 
         {% endblock %}
 
-    </div>
+    </main>
 
+    <!-- ========================================================= -->
+    <!-- Footer -->
+    <!-- ========================================================= -->
 
-    <!-- ================= FOOTER ================= -->
+    <footer class="bg-dark text-white text-center py-3">
 
-    <footer class="bg-dark text-white text-center p-3">
+        <div class="container">
 
-        © 2026 Flask Website
+            © 2026 Flask Website |
+            Built with Python, Flask & Bootstrap 5
+
+        </div>
 
     </footer>
 
-
-    <!-- Bootstrap JS -->
+    <!-- ========================================================= -->
+    <!-- Bootstrap JavaScript Bundle -->
+    <!-- Includes Popper.js -->
+    <!-- ========================================================= -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 
