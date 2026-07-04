@@ -11,6 +11,7 @@ from app.controllers.flames_controller import flames_bp
 from app.controllers.guess_controller import guess_bp
 from app.controllers.about_controller import about_bp
 from app.controllers.contact_controller import contact_bp
+from app.controllers.math_toolkit_controller import math_toolkit_bp
 
 
 def create_app():
@@ -35,5 +36,5 @@ def create_app():
     app.register_blueprint(guess_bp)
     app.register_blueprint(about_bp)
     app.register_blueprint(contact_bp)
-
+    app.register_blueprint(math_toolkit_bp)
     return app
