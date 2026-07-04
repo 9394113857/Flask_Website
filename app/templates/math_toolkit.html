@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+Math Toolkit
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8 col-md-10 col-sm-12">
+
+        <div class="card shadow-lg">
+
+            <div class="card-header bg-primary text-white text-center">
+
+                <h2>
+                    {{ page_data.title }}
+                </h2>
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <p class="lead">
+
+                    {{ page_data.description }}
+
+                </p>
+
+                <div class="alert alert-info mt-4">
+
+                    <h4>
+
+                        🚧 {{ page_data.status }}
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
