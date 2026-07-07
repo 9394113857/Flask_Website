@@ -1,6 +1,6 @@
 # app/__init__.py
 
-from flask import Flask
+from flask import Flask, jsonify
 
 from app.config import Config
 
@@ -37,4 +37,18 @@ def create_app():
     app.register_blueprint(about_bp)
     app.register_blueprint(contact_bp)
     app.register_blueprint(math_toolkit_bp)
+
+    @app.get("/health")
+    def health():
+        return (
+            jsonify(
+                {
+                    "status": "UP",
+                    "service": "Flask Website",
+                    "message": "Application is running",
+                }
+            ),
+            200,
+        )
+
     return app
