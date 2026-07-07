@@ -1,0 +1,130 @@
+cd E:\Devops-Projects  downlaoded from drive and point and swictha fetr do belkow commands:-
+path and ngrok file location
+
+# ngrok token url:-
+# https://dashboard.ngrok.com/get-started/your-authtoken
+
+# Step 1: Add the authtoken
+ngrok config add-authtoken YOUR_NEW_AUTHTOKEN
+
+# 2pynoQlwtlMxLIkpuQFsqdmYdHk_3Bxxit84b5k2KACXUhRkd
+
+ngrok config add-authtoken 2pynoQlwtlMxLIkpuQFsqdmYdHk_3Bxxit84b5k2KACXUhRkd
+
+----------------------------------------------------------------------------
+
+# Step 2: Verify it's configured
+ngrok config check
+
+----------------------------------------------------------------------------
+
+# Step 3: Start your Flask app:-
+# In a new Command Prompt:
+# cd E:\Devops-Projects\<your-flask-project>
+
+# Then start it with whichever command your project uses:
+python run.py
+or
+flask run
+
+---------------------------------------------------------------------------
+
+Step 4: Start ngrok
+# In another Command Prompt:
+cd E:\Devops-Projects
+
+ngrok http 5000
+
+---------------------------------------------------------------------------
+
+# Step 5: Create a new request:- ((local postman)
+Method: 
+POST
+
+URL:
+https://c0f5-183-82-144-146.ngrok-free.app/api/v1/auth/register  <api/v1/auth/register>  => soem url of soem servcie to etst okay
+
+http://127.0.0.1:5000/health
+{
+  "message": "Application is running",
+  "service": "Flask Website",
+  "status": "UP"
+}
+
+---------------------------------------------------------------------------
+
+# Step 6: Test through ngrok from any device using internet access:-
+
+If ngrok is already forwarding port 5000, use:
+https://c0f5-183-82-144-146.ngrok-free.app/health
+
+You should get the same JSON.
+
+With ngrok:-
+Internet
+     │
+     ▼
+https://c0f5-183-82-144-146.ngrok-free.app
+     │
+     ▼
+localhost:5000
+Now anyone with that URL can reach your local Flask server.
+
+---------------------------------------------------------------------------
+
+# Login and test with postman in live:-
+# Step 7: Test in Postman:-
+
+Method:
+GET
+
+URL:
+https://c0f5-183-82-144-146.ngrok-free.app/health
+
+Click Send.
+
+Expected response:
+{
+    "status": "UP",
+    "service": "Flask Website",
+    "message": "Application is running"
+}
+
+
+----------------------------------------------------------------------------
+
+# Step 8: Test with curl:- (local cmd)
+
+Local:
+curl https://c0f5-183-82-144-146.ngrok-free.app/health
+
+----------------------------------------------------------------------------
+
+# Step 9: Add a breakpoint:-
+
+In VS Code, put a breakpoint here:
+@app.get("/health")
+def health():
+
+
+Start debugging (F5), then send the GET request. 
+VS Code should stop at the breakpoint, 
+letting you inspect the request and step through the code.
+
+
+Ctrl + c  => To qit the ngrok server access
+
+----------------------------------------------------------------------------
+
+Interview explanation:-
+If an interviewer asks, "Why do we have a health endpoint?", you can answer:
+"A health endpoint lets monitoring systems, load balancers, Kubernetes, or DevOps tools quickly verify that the application is running and responding. It's also useful during development to confirm the server is reachable before testing business APIs."
+This is a common pattern in production services and a good practice to include even in smaller Flask applications.
+
+
+
+
+
+
+
+
