@@ -1,31 +1,28 @@
 # ============================================================
-# 🚀 CI PIPELINE
-# Flask Website Service
+# 🚀 CI PIPELINE - FLASK WEBSITE SERVICE
 #
-# FLOW:
+# Workflow:
 #
-# Feature branch:
-#   ✅ Run tests
-#   ❌ No Docker
+# Every push:
+#       ✅ Install dependencies
+#       ✅ Run tests
 #
 # Pull Request:
-#   ✅ Run tests
-#   ❌ No Docker
+#       ✅ Install dependencies
+#       ✅ Run tests
 #
-# Main branch:
-#   ✅ Run tests
-#   ❌ No Docker
+# Version Tag:
+#       ✅ Run tests
+#       ✅ Build Docker image
+#       ✅ Push Docker image
 #
-# Release Tag:
-#   ✅ Run tests
-#   ✅ Build Docker image
-#   ✅ Push version image
-#   ✅ Push latest image
+# Docker push happens ONLY for:
 #
-# Example:
+#       v1.0.0
+#       v1.0.1
+#       v2.0.0
 #
-# git tag v1.0.0
-# git push origin v1.0.0
+# Normal commits never push Docker.
 #
 # ============================================================
 
@@ -34,14 +31,21 @@ name: 🚀 CI Flask Website Service
 
 
 
+
 on:
 
 
+  # ----------------------------------------------------------
+  # All branch pushes
+  # ----------------------------------------------------------
+
   push:
+
 
     branches:
 
       - "**"
+
 
 
     tags:
@@ -50,11 +54,22 @@ on:
 
 
 
+
+  # ----------------------------------------------------------
+  # Pull requests
+  # ----------------------------------------------------------
+
   pull_request:
 
 
 
+
+  # ----------------------------------------------------------
+  # Manual execution
+  # ----------------------------------------------------------
+
   workflow_dispatch:
+
 
 
 
@@ -63,10 +78,12 @@ jobs:
 
 
 
+
+
 # ============================================================
 # 🧪 TEST JOB
 #
-# Runs on every event
+# Runs always
 #
 # ============================================================
 
@@ -81,16 +98,27 @@ jobs:
 
 
 
+
     steps:
 
 
 
-      - name: 📥 Checkout Code
+
+      # ------------------------------------------------------
+      # Checkout
+      # ------------------------------------------------------
+
+      - name: 📥 Checkout Repository
 
         uses: actions/checkout@v4
 
 
 
+
+
+      # ------------------------------------------------------
+      # Python setup
+      # ------------------------------------------------------
 
       - name: 🐍 Setup Python
 
@@ -103,6 +131,11 @@ jobs:
 
 
 
+
+      # ------------------------------------------------------
+      # Install packages
+      # ------------------------------------------------------
+
       - name: 📦 Install Dependencies
 
         run: |
@@ -110,12 +143,52 @@ jobs:
 
           python -m pip install --upgrade pip
 
+
           pip install -r requirements.txt
 
 
+          pip install pytest
 
+
+
+
+
+      # ------------------------------------------------------
+      # Show structure
+      #
+      # Helps debugging import issues
+      #
+      # ------------------------------------------------------
+
+      - name: 🔍 Project Structure
+
+        run: |
+
+
+          pwd
+
+          ls -la
+
+          find . -maxdepth 2 -type d
+
+
+
+
+
+      # ------------------------------------------------------
+      # Run tests
+      #
+      # PYTHONPATH tells Python where app package exists
+      #
+      # ------------------------------------------------------
 
       - name: 🧪 Run Tests
+
+        env:
+
+
+          PYTHONPATH: .
+
 
         run: |
 
@@ -127,9 +200,13 @@ jobs:
 
 
 # ============================================================
-# 🐳 DOCKER RELEASE
+# 🐳 DOCKER RELEASE JOB
 #
-# ONLY WHEN VERSION TAG CREATED
+# Runs ONLY when version tag created
+#
+# Example:
+#
+# git tag v1.0.0
 #
 # ============================================================
 
@@ -137,7 +214,7 @@ jobs:
   docker-release:
 
 
-    name: 🐳 Docker Release
+    name: 🐳 Build And Push Docker Image
 
 
     needs: test
@@ -150,13 +227,16 @@ jobs:
 
 
 
+
+
     steps:
 
 
 
-      - name: 📥 Checkout Code
+      - name: 📥 Checkout Repository
 
         uses: actions/checkout@v4
+
 
 
 
@@ -167,7 +247,9 @@ jobs:
 
         with:
 
+
           username: ${{ secrets.DOCKERHUB_USERNAME }}
+
 
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -176,7 +258,20 @@ jobs:
 
 
 
-      - name: 🏷️ Extract Version
+      # ------------------------------------------------------
+      # Extract tag version
+      #
+      # Example:
+      #
+      # refs/tags/v1.0.0
+      #
+      # becomes:
+      #
+      # v1.0.0
+      #
+      # ------------------------------------------------------
+
+      - name: 🏷️ Get Version
 
         run: |
 
@@ -219,7 +314,14 @@ jobs:
 
 
 
-      - name: 🏷️ Tag Latest
+      # ------------------------------------------------------
+      # Update latest
+      #
+      # latest always points to newest release
+      #
+      # ------------------------------------------------------
+
+      - name: 🏷️ Create Latest Tag
 
         run: |
 
