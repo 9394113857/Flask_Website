@@ -6,39 +6,147 @@ Math Toolkit
 
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="container">
 
-    <div class="col-lg-8 col-md-10 col-sm-12">
+    <!-- ========================================================= -->
+    <!-- Page Header -->
+    <!-- ========================================================= -->
 
-        <div class="card shadow-lg">
+    <div class="text-center mb-5">
 
-            <div class="card-header bg-primary text-white text-center">
+        <h1 class="fw-bold">
 
-                <h2>
-                    {{ page_data.title }}
-                </h2>
+            {{ page_data.title }}
 
-            </div>
+        </h1>
 
-            <div class="card-body text-center">
+        <p class="lead text-muted">
 
-                <p class="lead">
+            {{ page_data.description }}
 
-                    {{ page_data.description }}
+        </p>
 
-                </p>
+    </div>
 
-                <div class="alert alert-info mt-4">
+    <!-- ========================================================= -->
+    <!-- Bootstrap Navigation Pills -->
+    <!-- ========================================================= -->
 
-                    <h4>
+    <ul
+        class="nav nav-pills justify-content-center mb-4"
+        id="mathToolkitTabs"
+        role="tablist">
 
-                        🚧 {{ page_data.status }}
+        <!-- ===================================================== -->
+        <!-- Basic -->
+        <!-- ===================================================== -->
 
-                    </h4>
+        <li
+            class="nav-item mx-2"
+            role="presentation">
 
-                </div>
+            <button
+                class="nav-link active"
+                id="basic-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#basic"
+                type="button"
+                role="tab">
 
-            </div>
+                Basic
+
+            </button>
+
+        </li>
+
+        <!-- ===================================================== -->
+        <!-- Numbers -->
+        <!-- ===================================================== -->
+
+        <li
+            class="nav-item mx-2"
+            role="presentation">
+
+            <button
+                class="nav-link"
+                id="numbers-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#numbers"
+                type="button"
+                role="tab">
+
+                Numbers
+
+            </button>
+
+        </li>
+
+        <!-- ===================================================== -->
+        <!-- Range -->
+        <!-- ===================================================== -->
+
+        <li
+            class="nav-item mx-2"
+            role="presentation">
+
+            <button
+                class="nav-link"
+                id="range-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#range"
+                type="button"
+                role="tab">
+
+                Range
+
+            </button>
+
+        </li>
+
+    </ul>
+
+    <!-- ========================================================= -->
+    <!-- Tab Content -->
+    <!-- ========================================================= -->
+
+    <div class="tab-content">
+
+        <!-- ===================================================== -->
+        <!-- Basic -->
+        <!-- ===================================================== -->
+
+        <div
+            class="tab-pane fade show active"
+            id="basic"
+            role="tabpanel">
+
+            {% include "math_toolkit/_basic.html" %}
+
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- Numbers -->
+        <!-- ===================================================== -->
+
+        <div
+            class="tab-pane fade"
+            id="numbers"
+            role="tabpanel">
+
+            {% include "math_toolkit/_numbers.html" %}
+
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- Range -->
+        <!-- ===================================================== -->
+
+        <div
+            class="tab-pane fade"
+            id="range"
+            role="tabpanel">
+
+            {% include "math_toolkit/_range.html" %}
 
         </div>
 
