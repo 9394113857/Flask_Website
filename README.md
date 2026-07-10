@@ -2,7 +2,32 @@
 
 A beginner-friendly Flask web application built using **Factory Pattern**, **Blueprints**, **Service Layer**, **Bootstrap**, and **Responsive Design**.
 
-This project demonstrates how to organize a Flask application using a clean and scalable folder structure similar to professional backend applications.
+This project demonstrates how to organize a Flask application using a clean and scalable folder structure similar to professional backend applications while also showcasing a complete **DevOps workflow** using **Docker**, **GitHub Actions CI/CD**, **Docker Hub**, and **Render Deployment**.
+
+---
+
+## 🌐 Live Application
+
+- 🌍 **Website:** [https://flask-website-service.onrender.com](https://flask-website-service.onrender.com)
+
+## ❤️ Health Endpoint
+
+- ❤️ **Health Endpoint:** [https://flask-website-service.onrender.com/health](https://flask-website-service.onrender.com/health)
+
+The Health Endpoint displays:
+
+- 🟢 Service Status
+- 📦 Running Version
+- 🔖 Git Commit SHA
+- 🌿 Source Branch
+- 🕒 Build Time (UTC)
+- 🇮🇳 Build Time (IST)
+
+### Why is this useful?
+
+The build metadata is automatically generated during the **GitHub Actions CI Pipeline**, embedded into the **Docker Image**, deployed through **Render**, and exposed at runtime.
+
+This makes it easy to verify exactly which version of the application is currently running in production.
 
 ---
 
@@ -15,12 +40,17 @@ This project demonstrates how to organize a Flask application using a clean and 
 - 🎯 Guess Number Game *(Coming Soon)*
 - ℹ️ About Page
 - 📞 Contact Page
+- ❤️ Runtime Health Endpoint
+- 🐳 Dockerized Application
+- ⚙️ GitHub Actions CI/CD
+- 📦 Docker Hub Image Publishing
+- ☁️ Render Deployment
 
 ---
 
 # 🏗️ Project Architecture
 
-```
+```text
 Browser
     │
     ▼
@@ -38,9 +68,92 @@ Browser
 
 ---
 
+# 🚀 DevOps Deployment Flow
+
+```text
+Developer
+
+        │
+
+        ▼
+
+Feature Branch
+
+        │
+
+        ▼
+
+Pull Request
+
+        │
+
+        ▼
+
+Merge Into Main
+
+        │
+
+        ▼
+
+Git Version Tag
+
+        │
+
+        ▼
+
+GitHub Actions CI
+
+        │
+
+        ├── Install Dependencies
+        ├── Run Tests
+        ├── Generate build_info.json
+        ├── Build Docker Image
+        ├── Push Version Image
+        └── Push Latest Image
+
+                │
+
+                ▼
+
+Docker Hub
+
+                │
+
+                ▼
+
+Render Deployment
+
+                │
+
+                ▼
+
+Docker Container
+
+                │
+
+                ▼
+
+Flask Application
+
+                │
+
+                ▼
+
+Health Endpoint
+
+                │
+
+                ▼
+
+Runtime Build Metadata
+```
+
+---
+
 # 📁 Project Structure
 
-```
+```text
 Flask_Website/
 │
 ├── app/
@@ -74,11 +187,17 @@ Flask_Website/
 │   ├── config.py
 │   └── __init__.py
 │
-├── run.py
+├── .github/
+│   └── workflows/
+│        ci-flask-website.yml
+│        cd-render-flask-website.yml
+│
+├── Dockerfile
 ├── requirements.txt
+├── run.py
 ├── runtime.txt
-├── .gitignore
-└── README.md
+├── README.md
+└── build_info.json (Generated During CI)
 ```
 
 ---
@@ -91,8 +210,12 @@ Flask_Website/
 - CSS3
 - Bootstrap 5
 - Jinja2
+- Docker
 - Git
 - GitHub
+- GitHub Actions
+- Docker Hub
+- Render
 
 ---
 
@@ -161,11 +284,15 @@ flask run --debug
 
 ---
 
-# 🌐 Open Browser
+# 🌐 Local URLs
 
-```
+**Application**
+
 http://127.0.0.1:5000
-```
+
+**Health Endpoint**
+
+http://127.0.0.1:5000/health
 
 ---
 
@@ -180,6 +307,7 @@ http://127.0.0.1:5000
 | Guess Number | 🚧 |
 | About | ✅ |
 | Contact | ✅ |
+| Health Endpoint | ✅ |
 
 ---
 
@@ -199,7 +327,14 @@ This project demonstrates:
 - Static Files
 - Template Inheritance
 - Error Handling
+- Docker
 - Git Workflow
+- GitHub Actions CI
+- Docker Image Creation
+- Docker Hub Image Publishing
+- Render Deployment
+- Runtime Build Metadata
+- Production Health Monitoring
 
 ---
 
@@ -213,12 +348,13 @@ This project demonstrates:
 - PostgreSQL
 - Flask-Migrate
 - Authentication
-- Docker
-- Render Deployment
-- CI/CD Pipeline
+- Role-Based Authorization
+- API Documentation
+- Monitoring & Logging
+- Kubernetes Deployment
 
 ---
 
 # 👨‍💻 Author
 
-Built for learning Flask architecture and backend development using professional project structure.
+Built for learning **Flask Architecture**, **Backend Development**, **Docker**, **CI/CD**, and modern **DevOps Practices** using a clean, scalable, and production-inspired project structure.
