@@ -30,8 +30,14 @@
 
                 </label>
 
-                <input type="number" step="any" class="form-control" name="number1" placeholder="Enter First Number"
-                    value="{{ number1 if number1 is defined else '' }}" required>
+                <input
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    name="number1"
+                    placeholder="Enter First Number"
+                    value="{{ add_number1 if add_number1 is defined else '' }}"
+                    required>
 
             </div>
 
@@ -47,8 +53,14 @@
 
                 </label>
 
-                <input type="number" step="any" class="form-control" name="number2" placeholder="Enter Second Number"
-                    value="{{ number2 if number2 is defined else '' }}" required>
+                <input
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    name="number2"
+                    placeholder="Enter Second Number"
+                    value="{{ add_number2 if add_number2 is defined else '' }}"
+                    required>
 
             </div>
 
@@ -58,15 +70,20 @@
 
             <div class="d-grid">
 
-                <<button type="submit" name="operation" value="add" class="btn btn-success">
+                <button
+                    type="submit"
+                    name="operation"
+                    value="add"
+                    class="btn btn-success">
 
                     Add Numbers
 
-                    </button>
+                </button>
 
             </div>
 
         </form>
+
 
         <!-- ============================================== -->
         <!-- Result -->
@@ -86,23 +103,25 @@
 
         {% endif %}
 
+
         <!-- ============================================== -->
         <!-- Error -->
         <!-- ============================================== -->
 
-        {% if error is defined and error %}
+        {% if addition_error is defined and addition_error %}
 
         <div class="alert alert-danger mt-4">
 
             <h5 class="text-center mb-0">
 
-                {{ error }}
+                {{ addition_error }}
 
             </h5>
 
         </div>
 
         {% endif %}
+
 
     </div>
 

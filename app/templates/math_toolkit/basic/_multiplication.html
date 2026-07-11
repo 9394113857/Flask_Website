@@ -18,6 +18,11 @@
 
         <form method="POST">
 
+
+            <!-- ============================================== -->
+            <!-- First Number -->
+            <!-- ============================================== -->
+
             <div class="mb-3">
 
                 <label class="form-label">
@@ -32,9 +37,15 @@
                     class="form-control"
                     name="mul_number1"
                     placeholder="Enter First Number"
+                    value="{{ mul_number1 if mul_number1 is defined else '' }}"
                     required>
 
             </div>
+
+
+            <!-- ============================================== -->
+            <!-- Second Number -->
+            <!-- ============================================== -->
 
             <div class="mb-3">
 
@@ -50,9 +61,15 @@
                     class="form-control"
                     name="mul_number2"
                     placeholder="Enter Second Number"
+                    value="{{ mul_number2 if mul_number2 is defined else '' }}"
                     required>
 
             </div>
+
+
+            <!-- ============================================== -->
+            <!-- Submit Button -->
+            <!-- ============================================== -->
 
             <div class="d-grid">
 
@@ -68,7 +85,47 @@
 
             </div>
 
+
         </form>
+
+
+        <!-- ============================================== -->
+        <!-- Result -->
+        <!-- ============================================== -->
+
+        {% if multiplication_result is not none %}
+
+        <div class="alert alert-success mt-4">
+
+            <h5 class="text-center mb-0">
+
+                Result : {{ multiplication_result }}
+
+            </h5>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ============================================== -->
+        <!-- Error -->
+        <!-- ============================================== -->
+
+        {% if multiplication_error is defined and multiplication_error %}
+
+        <div class="alert alert-danger mt-4">
+
+            <h5 class="text-center mb-0">
+
+                {{ multiplication_error }}
+
+            </h5>
+
+        </div>
+
+        {% endif %}
+
 
     </div>
 

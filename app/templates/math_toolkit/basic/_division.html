@@ -18,6 +18,11 @@
 
         <form method="POST">
 
+
+            <!-- ============================================== -->
+            <!-- First Number -->
+            <!-- ============================================== -->
+
             <div class="mb-3">
 
                 <label class="form-label">
@@ -32,9 +37,15 @@
                     class="form-control"
                     name="div_number1"
                     placeholder="Enter First Number"
+                    value="{{ div_number1 if div_number1 is defined else '' }}"
                     required>
 
             </div>
+
+
+            <!-- ============================================== -->
+            <!-- Second Number -->
+            <!-- ============================================== -->
 
             <div class="mb-3">
 
@@ -50,9 +61,15 @@
                     class="form-control"
                     name="div_number2"
                     placeholder="Enter Second Number"
+                    value="{{ div_number2 if div_number2 is defined else '' }}"
                     required>
 
             </div>
+
+
+            <!-- ============================================== -->
+            <!-- Submit Button -->
+            <!-- ============================================== -->
 
             <div class="d-grid">
 
@@ -68,7 +85,47 @@
 
             </div>
 
+
         </form>
+
+
+        <!-- ============================================== -->
+        <!-- Result -->
+        <!-- ============================================== -->
+
+        {% if division_result is not none %}
+
+        <div class="alert alert-success mt-4">
+
+            <h5 class="text-center mb-0">
+
+                Result : {{ division_result }}
+
+            </h5>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ============================================== -->
+        <!-- Error -->
+        <!-- ============================================== -->
+
+        {% if division_error is defined and division_error %}
+
+        <div class="alert alert-danger mt-4">
+
+            <h5 class="text-center mb-0">
+
+                {{ division_error }}
+
+            </h5>
+
+        </div>
+
+        {% endif %}
+
 
     </div>
 
