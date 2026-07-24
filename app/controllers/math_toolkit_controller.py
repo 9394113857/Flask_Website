@@ -75,7 +75,22 @@ def math_toolkit():
     division_result = None
 
     division_error = None
+    
+    # ==========================================
+    # Modulus Variables
+    # ==========================================
 
+    mod_number1 = ""
+
+    mod_number2 = ""
+
+    modulus_result = None
+
+    modulus_error = None
+    
+    
+    # if the request method is POST, we will process the form data based on the selected operation. 
+    # Otherwise, we will just render the page with the initial data without any calculations.
     if request.method == "POST":
 
         try:
@@ -165,6 +180,31 @@ def math_toolkit():
                     div_number1,
                     div_number2
                 )
+                
+            # ==========================================
+            # Modulus Variables
+            # ==========================================
+
+            elif operation == "modulus":
+
+                mod_number1 = float(
+                    request.form["mod_number1"]
+                )
+
+                mod_number2 = float(
+                    request.form["mod_number2"]
+                )
+
+                modulus_result = BasicOperationsService.modulus(
+                    mod_number1,
+                    mod_number2
+                )
+
+                # Commented because resetting these variables 
+                # clears the calculated result and error.
+                # Commnted Lines ✅:- 
+                # modulus_result = None
+                # modulus_error = None    
 
 
         except ValueError:
@@ -184,11 +224,21 @@ def math_toolkit():
             elif operation == "divide":
 
                 division_error = "Please enter valid numbers."
+                
+            elif operation == "modulus":
+
+                modulus_error = "Please enter valid numbers."    
 
 
         except ZeroDivisionError:
 
-            division_error = "Cannot divide by zero."
+            if operation == "divide":
+
+                division_error = "Cannot divide by zero."
+
+            elif operation == "modulus":
+
+                modulus_error = "Cannot divide by zero."
 
 
         except Exception:
@@ -209,6 +259,9 @@ def math_toolkit():
 
                 division_error = "Something went wrong."
 
+            elif operation == "modulus":
+
+                modulus_error = "Something went wrong."
 
     return render_template(
         "math_toolkit.html",
@@ -236,13 +289,25 @@ def math_toolkit():
         div_number1=div_number1,
         div_number2=div_number2,
         division_result=division_result,
-        division_error=division_error
+        division_error=division_error,
+
+        # Modulus Data
+        mod_number1=mod_number1,
+        mod_number2=mod_number2,
+        modulus_result=modulus_result,
+        modulus_error=modulus_error
     )
     
+
+
+################### END OF THE FILE ######################
+
+
+
 # Now your controller has:
 
-# ✅ Separate inputs for all four calculators
-# ✅ Separate results for all four calculators
-# ✅ Separate errors for all four calculators
+# ✅ Separate inputs for all calculators
+# ✅ Separate results for all calculators
+# ✅ Separate errors for all calculators
 # ✅ No result leaking into the Addition card
-# ✅ Ready for updating the four HTML partials    
+# ✅ Ready for updating the HTML partials    
