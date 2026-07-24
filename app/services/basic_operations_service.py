@@ -39,4 +39,21 @@ class BasicOperationsService:
         return number1 / number2
 
 
-# Notice that Division includes divide-by-zero validation.
+    # Notice that Division includes divide-by-zero validation.
+
+    # ==========================================================
+    # Modulus
+    # ==========================================================
+
+    @staticmethod
+    def modulus(number1, number2):
+        """
+        Returns the remainder after dividing number1 by number2.
+        """
+
+        if number2 == 0:
+            raise ZeroDivisionError(
+                "Cannot divide by zero."
+            )
+
+        return number1 % number2

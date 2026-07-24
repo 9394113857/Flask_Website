@@ -1,6 +1,10 @@
+<!-- ========================================================= -->
+<!-- Modulus -->
+<!-- ========================================================= -->
+
 <div class="card mt-4 shadow-sm">
 
-    <div class="card-header bg-primary text-white">
+    <div class="card-header bg-secondary text-white">
 
         <h5 class="mb-0">
 
@@ -12,11 +16,109 @@
 
     <div class="card-body">
 
-        <div class="alert alert-warning mb-0">
+        <form method="POST">
 
-            🚧 Modulus operation will be implemented soon.
+            <!-- ============================================== -->
+            <!-- First Number -->
+            <!-- ============================================== -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    First Number
+
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    name="mod_number1"
+                    placeholder="Enter First Number"
+                    value="{{ mod_number1 if mod_number1 is defined else '' }}"
+                    required>
+
+            </div>
+
+            <!-- ============================================== -->
+            <!-- Second Number -->
+            <!-- ============================================== -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Second Number
+
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    class="form-control"
+                    name="mod_number2"
+                    placeholder="Enter Second Number"
+                    value="{{ mod_number2 if mod_number2 is defined else '' }}"
+                    required>
+
+            </div>
+
+            <!-- ============================================== -->
+            <!-- Submit Button -->
+            <!-- ============================================== -->
+
+            <div class="d-grid">
+
+                <button
+                    type="submit"
+                    name="operation"
+                    value="modulus"
+                    class="btn btn-secondary">
+
+                    Find Modulus
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- ============================================== -->
+        <!-- Result -->
+        <!-- ============================================== -->
+
+        {% if modulus_result is not none %}
+
+        <div class="alert alert-success mt-4">
+
+            <h5 class="text-center mb-0">
+
+                Result : {{ modulus_result }}
+
+            </h5>
 
         </div>
+
+        {% endif %}
+
+        <!-- ============================================== -->
+        <!-- Error -->
+        <!-- ============================================== -->
+
+        {% if modulus_error is defined and modulus_error %}
+
+        <div class="alert alert-danger mt-4">
+
+            <h5 class="text-center mb-0">
+
+                {{ modulus_error }}
+
+            </h5>
+
+        </div>
+
+        {% endif %}
 
     </div>
 
